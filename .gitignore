@@ -2,3 +2,8 @@ golang/thrift-server/gen-go/
 golang/thrift-server/gen-php/
 golang/thrift-server/vendor/
 sandbox/
+.phpcs-cache
+composer.lock
+client/go/gen-go
+gen-php/
+vendor

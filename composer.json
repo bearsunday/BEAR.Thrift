@@ -1,0 +1,40 @@
+{
+    "name": "bearsunday/thrift-server",
+    "version": "0.1.0",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "BEARSunday\\Thrift\\": "src"
+        },
+        "classmap": ["gen-php"]
+    },
+    "authors": [
+        {
+            "name": "Akihito Koriyama",
+            "email": "akihito.koriyama@gmail.com"
+        }
+    ],
+    "require": {
+        "apache/thrift": "^0.19.0",
+        "doctrine/coding-standard": "^12.0",
+        "squizlabs/php_codesniffer": "^3.5",
+        "bear/resource": "*"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "process-timeout":0
+    },
+    "scripts": {
+        "gen": [
+            "thrift -r --gen php:server ResourceService.thrift",
+            "thrift -r --gen go -o client/go ResourceService.thrift",
+            "composer dump"
+        ],
+        "serve": "php bin/serve.php 127.0.0.1 9090",
+        "client:go": "cd client/go && go run resource_client.go 127.0.0.1 9090 get /add \"a=1&b=2\"",
+        "cs": ["phpcs --standard=./phpcs.xml src"],
+        "cs-fix": ["phpcbf src"]
+    }
+}
