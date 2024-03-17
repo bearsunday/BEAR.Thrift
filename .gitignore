@@ -4,6 +4,6 @@ golang/thrift-server/vendor/
 sandbox/
 .phpcs-cache
 composer.lock
-client/go/gen-go
+client/go_client/gen-go
 gen-php/
 vendor
