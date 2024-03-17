@@ -8,6 +8,11 @@
         },
         "classmap": ["gen-php"]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "MyVendor\\MyApp\\": "tests/stub-app/src"
+        }
+    },
     "authors": [
         {
             "name": "Akihito Koriyama",
@@ -34,8 +39,9 @@
             "composer dump"
         ],
         "serve": "php bin/serve.php 127.0.0.1 9090",
-        "client:go": "cd client/go && go run resource_client.go 127.0.0.1 9090 get /add \"a=1&b=2\"",
+        "client:go": "cd client/go && go run resource_client.go 127.0.0.1 9090 get \"app://self/add?a=1&b=2\"",
+        "client:go2": "cd client/go && go run resource_client.go 127.0.0.1 9090 get app://self/add \"a=1&b=2\"",
         "cs": ["phpcs --standard=./phpcs.xml src"],
-        "cs-fix": ["phpcbf src"]
+        "cs-fix": ["phpcbf src tests"]
     }
 }
