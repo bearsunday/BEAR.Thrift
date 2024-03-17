@@ -1,11 +1,10 @@
 <?php
 
-use BEARSunday\Thrift\ResourceServiceHandler;
-use ResourceService\ResourceServiceProcessor;
-use Thrift\Factory\TBinaryProtocolFactory;
-use Thrift\Factory\TTransportFactory;
-use Thrift\Server\TForkingServer;
-use Thrift\Server\TServerSocket;
+use BEAR\Resource\Module\ResourceModule;
+use BEAR\Resource\ResourceInterface;
+use BEARSunday\Thrift\ThriftServer;
+use MyVendor\MyApp\Module\AppModule;
+use Ray\Di\Injector;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
@@ -17,21 +16,10 @@ if ($argc < 3) {
 $hostname = $argv[1];
 $port = $argv[2];
 
-$handler = new ResourceServiceHandler();
-$processor = new ResourceServiceProcessor($handler);
+$appName = 'MyVendor\MyApp';
 
-$transport = new TServerSocket($hostname, $port);
-$protocolFactory = new TBinaryProtocolFactory();
-
-$server = new TForkingServer(
-    $processor,
-    $transport,
-    new TTransportFactory(),
-    new TTransportFactory(),
-    new TBinaryProtocolFactory(),
-    new TBinaryProtocolFactory()
-);
+$resource = (new Injector(new AppModule()))->getInstance(ResourceInterface::class);
 
 echo "Starting the server on $hostname:$port...\n";
-$server->serve();
-echo "Done.\n";
+
+(new ThriftServer())->start($resource, $hostname, $port);
