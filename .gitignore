@@ -11,3 +11,5 @@ vendor
 /client/py_client/gen_py/
 /client/py_client/include/
 /client/py_client/lib/
+tests/Fake/app/vendor
+tests/Fake/app/vendor-bin

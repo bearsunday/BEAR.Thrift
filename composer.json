@@ -10,7 +10,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "MyVendor\\MyApp\\": "tests/stub-app/src"
+            "MyVendor\\MyApp\\": "tests/stub-resource/src"
         }
     },
     "authors": [
@@ -24,7 +24,8 @@
         "apache/thrift": "^0.19.0",
         "doctrine/coding-standard": "^12.0",
         "squizlabs/php_codesniffer": "^3.5",
-        "bear/resource": "^1.20"
+        "bear/resource": "^1.20",
+        "bear/package": "^1.10"
     },
     "config": {
         "allow-plugins": {
@@ -42,9 +43,9 @@
         ],
         "build:go": "cd client/go_client && go build",
         "build:py": "cd client/py_client && python3 -m venv ./ && source ./bin/activate && ./bin/pip install thrift",
-        "serve": "php bin/serve.php 127.0.0.1 9090",
+        "serve": "php bin/serve.php",
         "run:go": "./client/go_client/go_client 127.0.0.1 9090 get \"app://self/add?a=1&b=2\"",
-        "run:py": " python3 ./client/py_client/main.py 127.0.0.1 9090 get \"app://self/add?a=1&b=2\"",
+        "run:py": " python3 ./client/py_client/main.py 127.0.0.1 9090 get \"app://self/add?a=1&b=3\"",
         "cs": ["phpcs --standard=./phpcs.xml src"],
         "cs-fix": ["phpcbf src tests"]
     }

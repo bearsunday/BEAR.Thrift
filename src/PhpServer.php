@@ -11,9 +11,12 @@ use Thrift\Factory\TTransportFactory;
 use Thrift\Server\TForkingServer;
 use Thrift\Server\TServerSocket;
 
-final class ThriftServer
+final class PhpServer implements ServerInterface
 {
-    public function start(ResourceInterface $resource, string $hostname, string $port): void
+    /**
+     * @inheritdoc  
+     */
+    public function start(ResourceInterface $resource, string $hostname, int $port): void
     {
         $handler = new ResourceServiceHandler($resource);
         $processor = new ResourceServiceProcessor($handler);
