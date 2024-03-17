@@ -10,7 +10,7 @@ import (
 	"strconv"
 )
 
-func resourceInvoke(host string, port int, method, uri, query string) (*ResourceService.ResourceResponse, error) {
+func resourceInvoke(host string, port int, method, path, query string) (*ResourceService.ResourceResponse, error) {
 	var transport thrift.TTransport
 	transport, err := thrift.NewTSocket(fmt.Sprintf("%s:%d", host, port))
 	if err != nil {
@@ -29,7 +29,7 @@ func resourceInvoke(host string, port int, method, uri, query string) (*Resource
 
 	request := ResourceService.ResourceRequest{
 		Method: method,
-		URI:    uri,
+		Path:   path,
 		Query:  query,
 	}
 
@@ -43,7 +43,7 @@ func resourceInvoke(host string, port int, method, uri, query string) (*Resource
 
 func main() {
 	if len(os.Args) < 5 {
-		fmt.Println("Usage: [executable] hostname port method uri [query]")
+		fmt.Println("Usage: [executable] hostname port method path [query]")
 		return
 	}
 
@@ -55,13 +55,13 @@ func main() {
 	}
 
 	method := os.Args[3]
-	uri := os.Args[4]
+	path := os.Args[4]
 	query := ""
 	if len(os.Args) > 5 {
 		query = os.Args[5]
 	}
 
-	response, err := resourceInvoke(hostname, port, method, uri, query)
+	response, err := resourceInvoke(hostname, port, method, path, query)
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
