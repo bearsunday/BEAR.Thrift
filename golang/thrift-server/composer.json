@@ -1,0 +1,20 @@
+{
+    "name": "bearsunday/thrift-server",
+    "version": "0.1.0",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "BEARSunday\\Thrift\\": "src"
+        },
+        "classmap": ["gen-php/ResourceService"]
+    },
+    "authors": [
+        {
+            "name": "Akihito Koriyama",
+            "email": "akihito.koriyama@gmail.com"
+        }
+    ],
+    "require": {
+        "apache/thrift": "^0.19.0"
+    }
+}
