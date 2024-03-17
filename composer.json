@@ -36,11 +36,15 @@
         "build": [
             "thrift -r --gen php:server ResourceService.thrift",
             "thrift -r --gen go -o client/go_client ResourceService.thrift",
+            "thrift -r --gen py -o client/py_client ResourceService.thrift && mv client/py_client/gen-py client/py_client/gen_py",
             "composer dump",
             "cd client/go_client && go build"
         ],
+        "build:go": "cd client/go_client && go build",
+        "build:py": "cd client/py_client && python3 -m venv ./ && source ./bin/activate && ./bin/pip install thrift",
         "serve": "php bin/serve.php 127.0.0.1 9090",
-        "client:go": "./client/go_client/go_client 127.0.0.1 9090 get \"app://self/add?a=1&b=2\"",
+        "run:go": "./client/go_client/go_client 127.0.0.1 9090 get \"app://self/add?a=1&b=2\"",
+        "run:py": " python3 ./client/py_client/main.py 127.0.0.1 9090 get \"app://self/add?a=1&b=2\"",
         "cs": ["phpcs --standard=./phpcs.xml src"],
         "cs-fix": ["phpcbf src tests"]
     }

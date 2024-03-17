@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BEARSunday\Thrift;
 
 use BEAR\Resource\ResourceInterface;
-use BEARSunday\Thrift\ResourceServiceHandler;
 use ResourceService\ResourceServiceProcessor;
 use Thrift\Factory\TBinaryProtocolFactory;
 use Thrift\Factory\TTransportFactory;

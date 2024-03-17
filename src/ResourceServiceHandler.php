@@ -21,7 +21,8 @@ final class ResourceServiceHandler implements ResourceServiceIf
 
     public function invokeRequest(ResourceRequest $request): ResourceResponse
     {
-        parse_str($request->query, $query);
+        parse_str((string) $request->query, $query);
+        $query = $query ?? [];
         $bearResponse = $this->resource->{$request->method}->uri($request->path)($query);
         $response = new ResourceResponse();
         $response->code = $bearResponse->code;

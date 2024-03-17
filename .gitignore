@@ -7,3 +7,7 @@ composer.lock
 client/go_client/gen-go
 gen-php/
 vendor
+/client/py_client/bin/
+/client/py_client/gen_py/
+/client/py_client/include/
+/client/py_client/lib/
