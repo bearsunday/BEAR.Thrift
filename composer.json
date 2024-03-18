@@ -41,7 +41,7 @@
             "thrift -r --gen py -o client/py_client ResourceService.thrift && mv client/py_client/gen-py client/py_client/gen_py"
         ],
         "build:go": "cd client/go_client && go build",
-        "build:py": "cd client/py_client && python3 -m venv ./ && source ./bin/activate && ./bin/pip install thrift",
+        "build:py": "cd client/py_client && python3 -m venv ./ && . ./bin/activate && ./bin/pip install thrift",
         "build:php": "composer update && cd tests/Fake/app && composer update",
         "serve": "php bin/serve.php",
         "run:go": "./client/go_client/go_client 127.0.0.1 9090 get \"app://self/add?a=1&b=2\"",
