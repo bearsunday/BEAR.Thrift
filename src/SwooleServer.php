@@ -19,12 +19,12 @@ final class SwooleServer implements ServerInterface
     {
         $server = new Server($hostname, $port);
         $factory = new TBinaryProtocolFactory();
+        $handler = new ResourceServiceHandler($resource);
+        $processor = new ResourceServiceProcessor($handler);
         $server->on(
-            'receive', function (Server $server, int $fd, int $reactorId, string $data) use ($resource, $factory) {
+            'receive', function (Server $server, int $fd, int $reactorId, string $data) use ($resource, $factory, $processor) {
                 $transport = new TMemoryBuffer($data);
                 $protocol = $factory->getProtocol($transport);
-                $handler = new ResourceServiceHandler($resource);
-                $processor = new ResourceServiceProcessor($handler);
                 $processor->process($protocol, $protocol);
                 $server->send($fd, $transport->getBuffer());
             }
