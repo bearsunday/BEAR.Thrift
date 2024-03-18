@@ -1,6 +1,6 @@
 # BEAR.Sunday Thrift
 
-A package that allows high-speed access to BEAR.Sunday resources from multiple languages using [Thrift](https://thrift.apache.org/) and [Swoole](https://www.swoole.co.uk/).
+A package that allows high-speed access to BEAR.Sunday resources from multiple languages using [Thrift](https://thrift.apache.org/) and [Swoole](https://www.php.net/manual/en/book.swoole.php).
 
 ## Features
  * BEAR.Sunday resources can be used as assets
@@ -85,3 +85,22 @@ Application context is prod-hal-api-app
 
 As you can see, it's easy to access BEAR.Sunday resources from other languages.
 **Resources become assets that transcend applications** and can be accessed quickly.
+
+## Demo
+
+Build go & python and start the thrift server.
+
+```
+composer build:all
+composer serve
+```
+
+Run the go and pythonclient with another terminal.
+
+```
+composer run:go
+composer run:py
+```
+
+Note: Swoole, go and python must be installed to run the above scripts.
+
