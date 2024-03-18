@@ -102,5 +102,10 @@ composer run:go
 composer run:py
 ```
 
-Note: Swoole, go and python must be installed to run the above scripts.
+Note: Swoole, Thrift, go and python must be installed to run the above scripts. Straight forward if you're installing with brew.
 
+```
+brew install thrift
+brew install go
+brew install python3
+```

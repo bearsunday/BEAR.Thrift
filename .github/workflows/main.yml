@@ -26,6 +26,12 @@ jobs:
         with:
           python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
 
+      - name: Install Thrift
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y thrift-compiler
+          thrift --version
+
       - name: Install Composer dependencies
         run: composer update
 
