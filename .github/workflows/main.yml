@@ -37,6 +37,7 @@ jobs:
 
       - name: Run Composer build tasks
         run: composer build:all
+        shell: bash
 
       - name: Start server in background
         run: |
