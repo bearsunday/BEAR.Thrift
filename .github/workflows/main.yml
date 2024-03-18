@@ -1,0 +1,44 @@
+name: CI
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: swoole # Swoole extension
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '^1.17' # The Go version to download (if necessary) and use
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+
+      - name: Install Composer dependencies
+        run: composer install
+
+      - name: Run Composer build tasks
+        run: composer build:all
+
+      - name: Start server in background
+        run: |
+          composer serve > /dev/null 2>&1 &
+          sleep 3 # Give server some time to start
+
+      - name: Run Go task
+        run: composer run:go
+
+      - name: Run Python task
+        run: composer run:py
