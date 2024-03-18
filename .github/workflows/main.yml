@@ -48,3 +48,6 @@ jobs:
 
       - name: Run Python task
         run: composer run:py
+
+      - name: Run PHP task
+        run: composer run:php
