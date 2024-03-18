@@ -6,7 +6,7 @@ A package that allows high-speed access to BEAR.Sunday resources from multiple l
 
 ## Features
  * BEAR.Sunday resources can be used as assets
- * Access resources regardless of language (currently supports Go and Python)
+ * Access resources regardless of language (currently supports PHP, Go and Python)
 * Fast access with Thrift/Swoole
 * Can call resources from older versions of BEAR.Sunday projects
 * Operates in coordination without an HTTP server
@@ -57,6 +57,18 @@ Application context is prod-hal-api-app
 
 ## Client-side
 
+### PHP
+
+```php
+    $invoker = new ResourceInvoker($host, $port);
+    $response = $invoker->resourceInvoke($method, $path, $query);
+    assert($response instanceof ResourceResponse);
+    printf("Response Code: %s\n", $response->code);
+    printf("Response Headers: %s\n", json_encode($response->headers));
+    printf("Raw Response JsonValue: : %s\n", $response->jsonValue);
+    printf("Response View: %s\n", $response->view);
+```
+
 ### Go
 
 ```go
@@ -102,6 +114,7 @@ Run the go and pythonclient with another terminal.
 ```
 composer run:go
 composer run:py
+composer run:php
 ```
 
 Note: Swoole, Thrift, go and python must be installed to run the above scripts. Straight forward if you're installing with brew.
