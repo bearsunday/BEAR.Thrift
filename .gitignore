@@ -14,3 +14,4 @@ vendor
 /client/py_client/pyenv.cfg
 tests/Fake/app/vendor
 tests/Fake/app/vendor-bin
+/client/py_client/pyvenv.cfg
