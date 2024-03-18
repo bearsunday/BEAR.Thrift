@@ -1,5 +1,7 @@
 # BEAR.Sunday Thrift
 
+[![CI](https://github.com/bearsunday/BEAR.Thrift/actions/workflows/main.yml/badge.svg)](https://github.com/bearsunday/BEAR.Thrift/actions/workflows/main.yml)
+
 A package that allows high-speed access to BEAR.Sunday resources from multiple languages using [Thrift](https://thrift.apache.org/) and [Swoole](https://www.php.net/manual/en/book.swoole.php).
 
 ## Features
