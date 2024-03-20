@@ -43,11 +43,14 @@ jobs:
           composer serve > /dev/null 2>&1 &
           sleep 3 # Give server some time to start
 
-      - name: Run Go task
+      - name: Run Go client
         run: composer run:go
 
-      - name: Run Python task
+      - name: Run Python client
         run: composer run:py
 
-      - name: Run PHP task
+      - name: Run PHP client
         run: composer run:php
+
+      - name: Run BEAR.Sunday client
+        run: composer run:bear
