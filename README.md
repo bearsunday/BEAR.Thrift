@@ -57,6 +57,26 @@ Application context is prod-hal-api-app
 
 ## Client-side
 
+### BEAR.Sunday
+
+Import Thrift App in the module.
+```php
+    protected function configure(): void
+    {
+        // Binding thirft app to a host called "sekai"
+        $this->override(new ImportThriftAppModule([
+            new ThriftApp('sekai', '127.0.0.1', '9090')
+        ]));
+    }
+```
+
+Thrift apps available just like the 'self' app. See [more](/client/bear_client/main.php).
+```php
+echo $resource->get('page://self/?name=Sekai');  // "greeting": "Konichiwa Sekai" from local app
+echo $resource->get('page://sekai/?name=World'); // "greeting": "Hello World" from remote(127.0.0.1:9090) app
+```
+
+
 ### PHP
 
 ```php
