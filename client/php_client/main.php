@@ -15,7 +15,7 @@ require dirname(__DIR__, 2) . '/vendor/autoload.php';
     printf("Response View: %s\n", $response->view);
 })(
     '127.0.0.1',
-    '9090',
+    9090,
     'get',
     'page://self/?name=Workd!'
 );

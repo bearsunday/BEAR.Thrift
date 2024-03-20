@@ -9,10 +9,10 @@ use ResourceService\ResourceRequest;
 use ResourceService\ResourceResponse;
 use ResourceService\ResourceServiceIf;
 use Throwable;
-use function get_class;
+
 use function json_encode;
 use function parse_str;
-use function var_dump;
+use function sprintf;
 
 /**
  * The ResourceServiceHandler class is responsible for invoking a resource request and returning the response.
@@ -20,7 +20,7 @@ use function var_dump;
 final class ResourceServiceHandler implements ResourceServiceIf
 {
     public function __construct(
-        private Resource $resource
+        private Resource $resource,
     ) {
     }
 
@@ -34,19 +34,19 @@ final class ResourceServiceHandler implements ResourceServiceIf
     public function invokeRequest(ResourceRequest $request): ResourceResponse
     {
         parse_str((string) $request->query, $query);
-        $query = $query ?? [];
+        $query ??= [];
         $response = new ResourceResponse();
         try {
             $bearResponse = $this->resource->{$request->method}->uri($request->path)($query);
             $response->code = $bearResponse->code;
             $response->headers = $bearResponse->headers;
             $response->jsonValue = json_encode($bearResponse->body);
-            $response->view = (string)$bearResponse;
+            $response->view = (string) $bearResponse;
         } catch (Throwable $e) {
             $problem = [
                 'type' => $e::class,
                 'title' => $e->getMessage(),
-                'detail' => sprintf('thrown in %s:%s', $e->getFile(), $e->getLine())
+                'detail' => sprintf('thrown in %s:%s', $e->getFile(), $e->getLine()),
             ];
             $response->code = $e->getCode();
             $response->headers = ['Content-Type' => 'application/problem+json'];

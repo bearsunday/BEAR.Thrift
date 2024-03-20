@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BEARSunday\Thrift;
 
 use BEAR\Resource\ResourceInterface;
