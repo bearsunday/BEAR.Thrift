@@ -23,7 +23,7 @@
         "php": "^8.1",
         "apache/thrift": "^0.19.0",
         "bear/package": "^1.10",
-        "bear/resource": "dev-InvokeRequestInterface as 1.20.3"
+        "bear/resource": "^1.21"
     },
     "require-dev": {
         "doctrine/coding-standard": "^12.0",
@@ -52,6 +52,7 @@
         "run:php": "php ./client/php_client/main.php get \"page://self/?name=World!\"",
         "run:bear": "php ./client/bear_client/main.php",
         "cs": ["phpcs --standard=./phpcs.xml src"],
-        "cs-fix": ["phpcbf src --standard=./phpcs.xml"]
+        "cs-fix": ["phpcbf src --standard=./phpcs.xml"],
+        "test": ["php bin/serve.php &", "sleep 1", "@run:go", "@run:py", "@run:php", "@run:bear"]
     }
 }
