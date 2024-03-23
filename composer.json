@@ -52,7 +52,7 @@
         "run:php": "php ./client/php_client/main.php get \"page://self/?name=World!\"",
         "run:bear": "php ./client/bear_client/main.php",
         "cs": ["phpcs --standard=./phpcs.xml src"],
-        "cs-fix": ["phpcbf src --standard=./phpcs.xml"],
+        "cs-fix": ["phpcbf src bin --standard=./phpcs.xml"],
         "test": ["php bin/serve.php &", "sleep 1", "@run:go", "@run:py", "@run:php", "@run:bear"]
     }
 }

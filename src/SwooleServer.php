@@ -20,7 +20,8 @@ final class SwooleServer implements ServerInterface
         $handler = new ResourceServiceHandler($resource);
         $processor = new ResourceServiceProcessor($handler);
         $server->on(
-            'receive', function (Server $server, int $fd, int $reactorId, string $data) use ($resource, $factory, $processor) {
+            'receive',
+            static function (Server $server, int $fd, int $reactorId, string $data) use ($factory, $processor): void {
                 $transport = new TMemoryBuffer($data);
                 $protocol = $factory->getProtocol($transport);
                 $processor->process($protocol, $protocol);
