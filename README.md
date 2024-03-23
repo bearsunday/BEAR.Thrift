@@ -33,19 +33,20 @@ composer require bearsunday/thrift
 
 ### Server-side (PHP:BEAR.Sunday)
 
+bin/serve.php
+
 ```php
-$config = new Config(
+(new ServerBootstrap)(new Config(
     appName: 'MyVendor\MyApp',
     hostname: '127.0.0.1',
     port: 9090,
-    appDir: dirname(__DIR__) . '/tests/Fake/app',
+    appDir: dirname(__DIR__) . '/path/to/app',
     context: 'prod-app',
     server: Engine::Swoole
-);
-$server = new Server($config);
-$server->echoStartMessage();
-$server->start();
+))
 ```
+
+Start Thrift server
 
 ```shell
 > php bin/serve.php

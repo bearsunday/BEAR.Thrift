@@ -1,9 +1,10 @@
 <?php
 
-use BEARSunday\Thrift\ServerConfig;
-use BEARSunday\Thrift\ThriftApp;
-use BEARSunday\Thrift\Server;
+declare(strict_types=1);
+
 use BEARSunday\Thrift\Engine;
+use BEARSunday\Thrift\ServerBootstrap;
+use BEARSunday\Thrift\ServerConfig;
 
 require dirname(__DIR__) . '/tests/Fake/app/vendor/autoload.php';
 require dirname(__DIR__) . '/vendor/autoload.php';
@@ -14,8 +15,6 @@ $config = new ServerConfig(
     thriftPort: 9090,
     appDir: dirname(__DIR__) . '/tests/Fake/app',
     context: 'app',
-    engine: Engine::Swoole
+    engine: Engine::Swoole,
 );
-$server = new Server($config);
-$server->echoStartMessage();
-$server->start();
+(new ServerBootstrap())($config);
