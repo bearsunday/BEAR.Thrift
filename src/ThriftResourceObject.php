@@ -48,7 +48,7 @@ final class ThriftResourceObject extends ResourceObject
 
         $uri = $request->resourceObject->uri;
         $method = strtoupper($uri->method);
-        $response = $this->invoker->resourceInvoke($method, $uri->path, http_build_query($uri->query));
+        $response = $this->invoker->resourceInvoke($method, (string) $uri, http_build_query($uri->query));
         $this->code = $response->code;
         $this->code = $response->headers;
         $this->body = json_decode($response->jsonValue);
