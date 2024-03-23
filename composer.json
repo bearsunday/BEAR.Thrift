@@ -22,10 +22,12 @@
     "require": {
         "php": "^8.1",
         "apache/thrift": "^0.19.0",
+        "bear/package": "^1.10",
+        "bear/resource": "^1.21"
+    },
+    "require-dev": {
         "doctrine/coding-standard": "^12.0",
-        "squizlabs/php_codesniffer": "^3.5",
-        "bear/resource": "^1.20",
-        "bear/package": "^1.10"
+        "squizlabs/php_codesniffer": "^3.5"
     },
     "config": {
         "allow-plugins": {
@@ -34,7 +36,7 @@
         "process-timeout":0
     },
     "scripts": {
-        "build:all": ["@build:thrift", "@build:go", "@build:py", "@build:php"],
+        "build:all": ["@build:thrift", "@build:go", "@build:py", "@build:php", "@build:bear"],
         "build:thrift": [
             "thrift -r --gen php:server ResourceService.thrift",
             "thrift -r --gen go -o client/go_client ResourceService.thrift",
@@ -43,11 +45,14 @@
         "build:go": "cd client/go_client && go build",
         "build:py": "cd client/py_client && python3 -m venv ./ && . ./bin/activate && ./bin/pip install thrift",
         "build:php": "composer update && cd tests/Fake/app && composer update",
+        "build:bear": "cd client/bear_client && composer dump",
         "serve": "php bin/serve.php",
         "run:go": "./client/go_client/go_client 127.0.0.1 9090 get \"page://self/?name=World!\"",
         "run:py": "./client/py_client/bin/python3 ./client/py_client/main.py 127.0.0.1 9090 get \"page://self/?name=World!\"",
         "run:php": "php ./client/php_client/main.php get \"page://self/?name=World!\"",
+        "run:bear": "php ./client/bear_client/main.php",
         "cs": ["phpcs --standard=./phpcs.xml src"],
-        "cs-fix": ["phpcbf src tests"]
+        "cs-fix": ["phpcbf src bin --standard=./phpcs.xml"],
+        "test": ["php bin/serve.php &", "sleep 1", "@run:go", "@run:py", "@run:php", "@run:bear"]
     }
 }

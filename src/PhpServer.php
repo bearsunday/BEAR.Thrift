@@ -13,9 +13,7 @@ use Thrift\Server\TServerSocket;
 
 final class PhpServer implements ServerInterface
 {
-    /**
-     * @inheritdoc  
-     */
+    /** @inheritdoc */
     public function start(ResourceInterface $resource, string $hostname, int $port): void
     {
         $handler = new ResourceServiceHandler($resource);
@@ -31,7 +29,7 @@ final class PhpServer implements ServerInterface
             $transportFactory,
             $transportFactory,
             $protocolFactory,
-            $protocolFactory
+            $protocolFactory,
         );
         $server->serve();
     }

@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace BEARSunday\Thrift;
 
-use ResourceService\ResourceRequest;
 use ResourceService\ResourceResponse;
-use ResourceService\ResourceServiceClient;
-use Thrift\Protocol\TBinaryProtocol;
-use Thrift\Transport\TBufferedTransport;
-use Thrift\Transport\TSocket;
 
 interface ResourceInvokerInterface
 {

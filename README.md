@@ -33,19 +33,20 @@ composer require bearsunday/thrift
 
 ### Server-side (PHP:BEAR.Sunday)
 
+bin/serve.php
+
 ```php
-$config = new Config(
+(new ServerBootstrap)(new Config(
     appName: 'MyVendor\MyApp',
     hostname: '127.0.0.1',
     port: 9090,
-    appDir: dirname(__DIR__) . '/tests/Fake/app',
+    appDir: dirname(__DIR__) . '/path/to/app',
     context: 'prod-app',
     server: Engine::Swoole
-);
-$server = new Server($config);
-$server->echoStartMessage();
-$server->start();
+))
 ```
+
+Start Thrift server
 
 ```shell
 > php bin/serve.php
@@ -56,6 +57,26 @@ Application context is prod-hal-api-app
 ```
 
 ## Client-side
+
+### BEAR.Sunday
+
+Import Thrift App in the module.
+```php
+    protected function configure(): void
+    {
+        // Binding thirft app to a host called "sekai"
+        $this->override(new ImportThriftAppModule([
+            new ThriftApp('sekai', '127.0.0.1', '9090')
+        ]));
+    }
+```
+
+Thrift apps available just like the 'self' app. See [more](/client/bear_client/main.php).
+```php
+echo $resource->get('page://self/?name=Sekai');  // "greeting": "Konichiwa Sekai" from local app
+echo $resource->get('page://sekai/?name=World'); // "greeting": "Hello World" from remote(127.0.0.1:9090) app
+```
+
 
 ### PHP
 

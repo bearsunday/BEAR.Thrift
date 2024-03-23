@@ -10,10 +10,14 @@ use Ray\Di\InjectorInterface;
 
 use function dirname;
 
-/** @SuppressWarnings(PHPMD.StaticAccess) */
+/**
+ * @SuppressWarnings(PHPMD.StaticAccess) 
+*/
 final class Injector
 {
-    /** @codeCoverageIgnore */
+    /**
+     * @codeCoverageIgnore 
+     */
     private function __construct()
     {
     }
