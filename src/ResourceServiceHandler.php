@@ -11,7 +11,6 @@ use ResourceService\ResourceServiceIf;
 use Throwable;
 
 use function json_encode;
-use function parse_str;
 use function parse_url;
 use function sprintf;
 use function str_replace;
@@ -35,12 +34,10 @@ final class ResourceServiceHandler implements ResourceServiceIf
      */
     public function invokeRequest(ResourceRequest $request): ResourceResponse
     {
-        parse_str((string) $request->query, $query);
-        $query ??= [];
         $response = new ResourceResponse();
         try {
-            $uri = $this->changeHostSelf($request->path);
-            $bearResponse = $this->resource->{$request->method}->uri($uri)($query);
+            $uri = $this->changeHostSelf($request->uri);
+            $bearResponse = $this->resource->{$request->method}->uri($uri)();
             $response->code = $bearResponse->code;
             $response->headers = $bearResponse->headers;
             $response->jsonValue = json_encode($bearResponse->body);
@@ -60,13 +57,16 @@ final class ResourceServiceHandler implements ResourceServiceIf
         return $response;
     }
 
-    private function changeHostSelf(string $path): string
+    /**
+     * Changes the host of a given URI to 'self'.
+     */
+    private function changeHostSelf(string $uri): string
     {
-        $urlParts = parse_url($path);
-        if ($urlParts === false) {
-            return $path;
+        $urlParts = parse_url($uri);
+        if (! isset($urlParts['host'])) {
+            return $uri; // relative URL
         }
 
-        return str_replace($urlParts['host'], 'self', $path);
+        return str_replace($urlParts['host'], 'self', $uri); // change host to 'self'
     }
 }

@@ -26,14 +26,14 @@ final class ResourceInvoker implements ResourceInvokerInterface
         $this->resourceService = new ResourceServiceClient($protocol);
     }
 
-    public function resourceInvoke(string $method, string $path, string $query = ''): ResourceResponse
+    /** {@inheritdoc } */
+    public function resourceInvoke(string $method, string $uri): ResourceResponse
     {
         $this->transport->open();
         $request = new ResourceRequest(
             [
                 'method' => $method,
-                'path' => $path,
-                'query' => $query,
+                'uri' => $uri,
             ],
         );
         $response = null;

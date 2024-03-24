@@ -1,14 +1,13 @@
-// resource_invoke.go_client
 package main
 
 import (
 	"context"
 	"fmt"
 	"github.com/apache/thrift/lib/go/thrift"
-	"go_client/gen-go/ResourceService"
+	"go_client/gen_go/ResourceService"
 )
 
-func ResourceInvoke(host string, port int, method, path, query string) (*ResourceService.ResourceResponse, error) {
+func ResourceInvoke(host string, port int, method string, uri string) (*ResourceService.ResourceResponse, error) {
 	var transport thrift.TTransport
 	transport, err := thrift.NewTSocket(fmt.Sprintf("%s:%d", host, port))
 	if err != nil {
@@ -27,8 +26,7 @@ func ResourceInvoke(host string, port int, method, path, query string) (*Resourc
 
 	request := ResourceService.ResourceRequest{
 		Method: method,
-		Path:   path,
-		Query:  query,
+		URI:    uri,
 	}
 
 	response, err := client.InvokeRequest(context.Background(), &request)

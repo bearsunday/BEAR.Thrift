@@ -2,11 +2,11 @@
 
 namespace php ResourceService
 namespace go ResourceService
+namespace py ResourceService
 
 struct ResourceRequest {
     1: string method,
-    2: string path,
-    3: string query
+    2: string uri,
 }
 
 struct ResourceResponse {

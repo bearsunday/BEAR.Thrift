@@ -5,6 +5,8 @@ sandbox/
 .phpcs-cache
 composer.lock
 client/go_client/gen-go
+client/go_client/gen_go
+client/go_client/go_client
 gen-php/
 vendor
 /client/py_client/bin/
