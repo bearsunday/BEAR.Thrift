@@ -5,8 +5,7 @@ namespace go ResourceService
 
 struct ResourceRequest {
     1: string method,
-    2: string path,
-    3: string query
+    2: string uri,
 }
 
 struct ResourceResponse {

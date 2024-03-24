@@ -2,20 +2,18 @@ import sys
 import json
 from resource_invoke import ResourceInvoke
 
+
 def main():
-    if len(sys.argv) < 5:
-        print("Usage: python3 main.py hostname port method path [query]")
+    if len(sys.argv) < 4:
+        print("Usage: python3 main.py hostname port method uri")
         return
 
     hostname = sys.argv[1]
     port = int(sys.argv[2])
     method = sys.argv[3]
-    path = sys.argv[4]
-    query = ""
-    if len(sys.argv) > 5:
-        query = sys.argv[5]
+    uri = sys.argv[4]
 
-    response = ResourceInvoke(hostname, port, method, path, query)
+    response = ResourceInvoke(hostname, port, method, uri)
     if not response:
         print("Request failed.")
         return
@@ -32,6 +30,7 @@ def main():
 
     print("Response Value:", value)
     print("Response View:", response.view)
+
 
 if __name__ == "__main__":
     main()

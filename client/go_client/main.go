@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 5 {
-		fmt.Println("Usage: [executable] hostname port method path [query]")
+	if len(os.Args) < 4 {
+		fmt.Println("Usage: [executable] hostname port method uri")
 		return
 	}
 
@@ -22,13 +22,9 @@ func main() {
 	}
 
 	method := os.Args[3]
-	path := os.Args[4]
-	query := ""
-	if len(os.Args) > 5 {
-		query = os.Args[5]
-	}
+	uri := os.Args[4]
 
-	response, err := ResourceInvoke(hostname, port, method, path, query)
+	response, err := ResourceInvoke(hostname, port, method, uri)
 	if err != nil {
 		fmt.Println("Error:", err)
 		return

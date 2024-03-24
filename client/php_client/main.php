@@ -5,9 +5,9 @@ use ResourceService\ResourceResponse;
 
 require dirname(__DIR__, 2) . '/vendor/autoload.php';
 
-(function(string $host, string $port, string $method, string $path): void {
+(function(string $host, string $port, string $method, string $uri): void {
     $invoker = new ResourceInvoker($host, $port);
-    $response = $invoker->resourceInvoke($method, $path);
+    $response = $invoker->resourceInvoke($method, $uri);
     assert($response instanceof ResourceResponse);
     printf("Response Code: %s\n", $response->code);
     printf("Response Headers: %s\n", json_encode($response->headers));
@@ -17,5 +17,5 @@ require dirname(__DIR__, 2) . '/vendor/autoload.php';
     '127.0.0.1',
     9090,
     'get',
-    'page://self/?name=Workd!'
+    '/?name=Workd!'
 );
