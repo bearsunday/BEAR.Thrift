@@ -5,23 +5,13 @@
 A package that allows high-speed access to BEAR.Sunday resources from multiple languages using [Thrift](https://thrift.apache.org/) and [Swoole](https://www.php.net/manual/en/book.swoole.php).
 
 ## Features
- * BEAR.Sunday resources can be used as assets
- * Access resources regardless of language (currently supports PHP, Go and Python)
-* Fast access with Thrift/Swoole
-* Can call resources from older versions of BEAR.Sunday projects
-* Operates in coordination without an HTTP server
 
-## Why BEAR.Sunday Thrift?
-
-BEAR.Sunday is characterized by its clean, resource-oriented architecture.
-
- * Resources are application assets
- * Improve performance with fast resource access
- * Accelerate development by utilizing resources in other languages
- * Integrate legacy projects with the latest BEAR.Sunday
- * Loosely couple multiple applications without HTTP
-
-Because it is resource-oriented, BEAR.Sunday's resources become assets and can continue to be utilized even when migrating to other languages or frameworks.
+* BEAR.Sunday resources can be utilized across various languages and frameworks
+* Seamless access to remote BEAR.Sunday apps from the local BEAR.Sunday app
+* Access resources regardless of language (currently supports PHP, Go, and Python)
+* Fast access with Thrift/Swoole, compared to HTTP
+* Can call resources from older versions of BEAR.Sunday apps
+* Operates independently of an HTTP server
 
 ## Installation
 
@@ -75,6 +65,7 @@ Thrift apps available just like the 'self' app. See [more](/client/bear_client/m
 ```php
 echo $resource->get('page://self/?name=Sekai');  // "greeting": "Konichiwa Sekai" from local app
 echo $resource->get('page://sekai/?name=World'); // "greeting": "Hello World" from remote(127.0.0.1:9090) app
+// echo $resource->get('/?name=World'); // "greeting": "Hello World" from remote(127.0.0.1:9090) app
 ```
 
 
@@ -82,7 +73,9 @@ echo $resource->get('page://sekai/?name=World'); // "greeting": "Hello World" fr
 
 ```php
     $invoker = new ResourceInvoker($host, $port);
-    $response = $invoker->resourceInvoke($method, $path, $query);
+    $method = 'get';
+    $uri = '/user?id=1';
+    $response = $invoker->resourceInvoke($method, $uri);
     assert($response instanceof ResourceResponse);
     printf("Response Code: %s\n", $response->code);
     printf("Response Headers: %s\n", json_encode($response->headers));
@@ -93,7 +86,9 @@ echo $resource->get('page://sekai/?name=World'); // "greeting": "Hello World" fr
 ### Go
 
 ```go
-    response, err := ResourceInvoke(hostname, port, method, path, query)
+    method := "get"
+    uri := "/user?id=1
+    response, err := ResourceInvoke(hostname, port, method, uri)
     if err != nil {
         fmt.Println("Error:", err)
         return
@@ -107,7 +102,9 @@ echo $resource->get('page://sekai/?name=World'); // "greeting": "Hello World" fr
 ### Python
 
 ```python
-    response = ResourceInvoke(hostname, port, method, path, query)
+    method = "get"
+    uri = "/user?id=1"
+    response = ResourceInvoke(hostname, port, method, uri)
     if not response:
         print("Request failed.")
         return
@@ -118,8 +115,11 @@ echo $resource->get('page://sekai/?name=World'); // "greeting": "Hello World" fr
     print("Response View:", response.view)
 ```
 
+Note: The URI can be a schema as well as a path. Instead of `/user?id=1`, you can specify `page://self/user?id=1` to access both app and page resources.
+
 As you can see, it's easy to access BEAR.Sunday resources from other languages.
 **Resources become assets that transcend applications** and can be accessed quickly.
+
 
 ## Demo
 
