@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    thrift (0.19.0)
+
+PLATFORMS
+  arm64-darwin-22
+
+DEPENDENCIES
+  thrift (~> 0.19.0)
+
+BUNDLED WITH
+   2.4.22

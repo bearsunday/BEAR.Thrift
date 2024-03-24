@@ -26,6 +26,12 @@ jobs:
         with:
           python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
 
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          bundler-cache: true
+
       - name: Install Thrift
         run: |
           sudo apt-get update
@@ -54,3 +60,6 @@ jobs:
 
       - name: Run BEAR.Sunday client
         run: composer run:bear
+
+      - name: Run Ruby client
+        run: composer run:rb

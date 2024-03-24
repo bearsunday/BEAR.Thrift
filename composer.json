@@ -36,23 +36,27 @@
         "process-timeout":0
     },
     "scripts": {
-        "build:all": ["@build:thrift", "@build:go", "@build:py", "@build:php", "@build:bear"],
+        "build:all": ["@build:thrift", "@build:go", "@build:py", "@build:php", "@build:bear", "@build:rb"],
         "build:thrift": [
             "rm -rf client/go_client/gen*",
             "rm -rf client/py_client/gen*",
+            "rm -rf client/rb_client/gen*",
             "thrift -r --gen php:server ResourceService.thrift",
             "thrift -r --gen go -o client/go_client ResourceService.thrift && mv client/go_client/gen-go client/go_client/gen_go",
-            "thrift -r --gen py -o client/py_client ResourceService.thrift && mv client/py_client/gen-py client/py_client/gen_py"
+            "thrift -r --gen py -o client/py_client ResourceService.thrift && mv client/py_client/gen-py client/py_client/gen_py",
+            "thrift -r --gen rb -o client/rb_client ResourceService.thrift && mv client/rb_client/gen-rb client/rb_client/gen_rb"
         ],
         "build:go": "cd client/go_client && go build",
         "build:py": "cd client/py_client && python3 -m venv ./ && . ./bin/activate && ./bin/pip install thrift",
         "build:php": "composer update && cd tests/Fake/app && composer update",
         "build:bear": "cd client/bear_client && composer dump",
+        "build:rb": "cd client/rb_client && bundle install",
         "serve": "php bin/serve.php",
         "run:go": "./client/go_client/go_client 127.0.0.1 9090 get \"page://self/?name=World!\"",
         "run:py": "./client/py_client/bin/python3 ./client/py_client/main.py 127.0.0.1 9090 get \"page://self/?name=World!\"",
         "run:php": "php ./client/php_client/main.php get \"page://self/?name=World!\"",
         "run:bear": "php ./client/bear_client/main.php",
+        "run:rb": "cd ./client/rb_client && bundle exec ruby main.rb 127.0.0.1 9090 get \"page://self/?name=World!\"",
         "cs": ["phpcs --standard=./phpcs.xml src"],
         "cs-fix": ["phpcbf src bin --standard=./phpcs.xml"],
         "test": ["php bin/serve.php &", "sleep 1", "@run:go", "@run:py", "@run:php", "@run:bear"]
