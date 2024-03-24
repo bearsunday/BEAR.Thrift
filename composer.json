@@ -38,10 +38,10 @@
     "scripts": {
         "build:all": ["@build:thrift", "@build:go", "@build:py", "@build:php", "@build:bear"],
         "build:thrift": [
+            "rm -rf client/py_client/gen_go/",
             "rm -rf client/py_client/gen_py/",
-            "rm -rf client/py_client/gen-_go/",
             "thrift -r --gen php:server ResourceService.thrift",
-            "thrift -r --gen go -o client/go_client ResourceService.thrift",
+            "thrift -r --gen go -o client/go_client ResourceService.thrift && mv client/go_client/gen-go client/go_client/gen_go",
             "thrift -r --gen py -o client/py_client ResourceService.thrift && mv client/py_client/gen-py client/py_client/gen_py"
         ],
         "build:go": "cd client/go_client && go build",

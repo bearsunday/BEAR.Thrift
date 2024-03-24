@@ -8,6 +8,7 @@ use BEAR\Resource\AbstractRequest;
 use BEAR\Resource\AbstractUri;
 use BEAR\Resource\InvokerInterface;
 use BEAR\Resource\ResourceObject;
+use BEARSunday\Thrift\Exception\ThriftRemoteExecutionException;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 use function http_build_query;
@@ -49,6 +50,10 @@ final class ThriftResourceObject extends ResourceObject
         $uri = $request->resourceObject->uri;
         $method = strtoupper($uri->method);
         $response = $this->invoker->resourceInvoke($method, (string) $uri, http_build_query($uri->query));
+        if ($response->code >= 400) {
+            throw new ThriftRemoteExecutionException($response->jsonValue, $response->code);
+        }
+
         $this->code = $response->code;
         $this->code = $response->headers;
         $this->body = json_decode($response->jsonValue);
