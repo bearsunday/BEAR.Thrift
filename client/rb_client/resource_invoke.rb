@@ -6,7 +6,7 @@ class ResourceInvoke
   def initialize(host, port)
     @socket = Thrift::Socket.new(host, port)
     @transport = Thrift::BufferedTransport.new(@socket)
-    @protocol = Thrift::BinaryProtocol.new(@transport)
+    @protocol = Thrift::BinaryProtocol.new(@transport, false)
     @client = ResourceService::ResourceService::Client.new(@protocol)
   end
 
