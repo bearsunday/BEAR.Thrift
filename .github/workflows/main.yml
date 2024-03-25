@@ -43,6 +43,9 @@ jobs:
       - name: Run Composer build tasks
         run: composer build:all
 
+      - name: Run check.rb
+        run: ruby client/rb_client/check.rb
+
       - name: Start server in background
         run: |
           composer serve > /dev/null 2>&1 &
