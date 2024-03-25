@@ -89,10 +89,7 @@ echo $resource->get('page://sekai/?name=World'); // "greeting": "Hello World" fr
     method := "get"
     uri := "/user?id=1
     response, err := ResourceInvoke(hostname, port, method, uri)
-    if err != nil {
-        fmt.Println("Error:", err)
-        return
-    }
+
     fmt.Println("Response Code:", response.Code)
     fmt.Println("Response Headers:", response.Headers)
     fmt.Println("Raw Response JsonValue: ", response.JsonValue)
@@ -105,9 +102,6 @@ echo $resource->get('page://sekai/?name=World'); // "greeting": "Hello World" fr
     method = "get"
     uri = "/user?id=1"
     response = ResourceInvoke(hostname, port, method, uri)
-    if not response:
-        print("Request failed.")
-        return
 
     print("Response Code:", response.code)
     print("Response Headers:", response.headers)
