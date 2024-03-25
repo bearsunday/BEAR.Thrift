@@ -76,8 +76,8 @@ echo $resource->get('page://sekai/?name=World'); // "greeting": "Hello World" fr
 $method = 'get';
 $uri = '/user?id=1';
 
-$invoker = new ResourceInvoker($host, $port);
-$response = $invoker->resourceInvoke($method, $uri);
+$invoke = new ResourceInvoke($host, $port);
+$response = $invoke($method, $uri);
 
 assert($response instanceof ResourceResponse);
 printf("Response Code: %s\n", $response->code);

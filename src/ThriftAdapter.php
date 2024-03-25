@@ -11,7 +11,7 @@ use BEAR\Resource\ResourceObject;
 final class ThriftAdapter implements AdapterInterface
 {
     public function __construct(
-        private ResourceInvokerInterface $invoker,
+        private ResourceInvokeInterface $invoker,
     ) {
     }
 

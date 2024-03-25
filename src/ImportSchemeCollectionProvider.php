@@ -32,7 +32,7 @@ final class ImportSchemeCollectionProvider implements ProviderInterface
     {
         foreach ($this->importAppConfig as $app) {
             $adapter = $app instanceof ImportApp ? new AppAdapter($this->injector, $app->appName) :
-                 new ThriftAdapter(new ResourceInvoker($app->thriftHost, $app->thriftPort));
+                 new ThriftAdapter(new ResourceInvoke($app->thriftHost, $app->thriftPort));
             $this->schemeCollection
                 ->scheme('page')->host($app->host)->toAdapter($adapter)
                 ->scheme('app')->host($app->host)->toAdapter($adapter);

@@ -1,13 +1,13 @@
 <?php
 
-use BEARSunday\Thrift\ResourceInvoker;
+use BEARSunday\Thrift\ResourceInvoke;
 use ResourceService\ResourceResponse;
 
 require dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 (function(string $host, string $port, string $method, string $uri): void {
-    $invoker = new ResourceInvoker($host, $port);
-    $response = $invoker->resourceInvoke($method, $uri);
+    $invoke = new ResourceInvoke($host, $port);
+    $response = $invoke($method, $uri);
     assert($response instanceof ResourceResponse);
     printf("Response Code: %s\n", $response->code);
     printf("Response Headers: %s\n", json_encode($response->headers));
