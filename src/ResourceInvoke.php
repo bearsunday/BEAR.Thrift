@@ -13,7 +13,7 @@ use Thrift\Transport\TBufferedTransport;
 use Thrift\Transport\TSocket;
 use Throwable;
 
-final class ResourceInvoker implements ResourceInvokerInterface
+final class ResourceInvoke implements ResourceInvokeInterface
 {
     private ResourceServiceClient $resourceService;
     private TBufferedTransport $transport;
@@ -27,7 +27,7 @@ final class ResourceInvoker implements ResourceInvokerInterface
     }
 
     /** {@inheritdoc } */
-    public function resourceInvoke(string $method, string $uri): ResourceResponse
+    public function __invoke(string $method, string $uri): ResourceResponse
     {
         $this->transport->open();
         $request = new ResourceRequest(

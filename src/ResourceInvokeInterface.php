@@ -6,7 +6,7 @@ namespace BEARSunday\Thrift;
 
 use ResourceService\ResourceResponse;
 
-interface ResourceInvokerInterface
+interface ResourceInvokeInterface
 {
     /**
      * Invokes a resource with the given method, path, and optional query string.
@@ -16,5 +16,5 @@ interface ResourceInvokerInterface
      *
      * @return ResourceResponse The response from the resource invocation.
      */
-    public function resourceInvoke(string $method, string $uri): ResourceResponse;
+    public function __invoke(string $method, string $uri): ResourceResponse;
 }

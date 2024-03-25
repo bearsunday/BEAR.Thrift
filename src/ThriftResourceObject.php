@@ -38,7 +38,7 @@ final class ThriftResourceObject extends ResourceObject
     private ResponseInterface $response;
 
     public function __construct(
-        private ResourceInvokerInterface $invoker,
+        private ResourceInvokeInterface $invoke,
     ) {
         unset($this->code, $this->headers, $this->body, $this->view);
     }
@@ -49,7 +49,7 @@ final class ThriftResourceObject extends ResourceObject
 
         $uri = $request->resourceObject->uri;
         $method = strtoupper($uri->method);
-        $response = $this->invoker->resourceInvoke($method, (string) $uri, http_build_query($uri->query));
+        $response = ($this->invoke)($method, (string) $uri);
         if ($response->code >= 400) {
             throw new ThriftRemoteExecutionException($response->jsonValue, $response->code);
         }
