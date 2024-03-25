@@ -8,7 +8,7 @@ A package that allows high-speed access to BEAR.Sunday resources from multiple l
 
 * BEAR.Sunday resources can be utilized across various languages and frameworks
 * Seamless access to remote BEAR.Sunday apps from the local BEAR.Sunday app
-* Access resources regardless of language (currently supports PHP, Go, and Python)
+* Access resources regardless of language (currently supports PHP, Go, Python, Ruby and BEAR.Sunday)
 * Fast access with Thrift/Swoole, compared to HTTP
 * Can call resources from older versions of BEAR.Sunday apps
 * Operates independently of an HTTP server
@@ -89,10 +89,7 @@ echo $resource->get('page://sekai/?name=World'); // "greeting": "Hello World" fr
     method := "get"
     uri := "/user?id=1
     response, err := ResourceInvoke(hostname, port, method, uri)
-    if err != nil {
-        fmt.Println("Error:", err)
-        return
-    }
+
     fmt.Println("Response Code:", response.Code)
     fmt.Println("Response Headers:", response.Headers)
     fmt.Println("Raw Response JsonValue: ", response.JsonValue)
@@ -105,14 +102,26 @@ echo $resource->get('page://sekai/?name=World'); // "greeting": "Hello World" fr
     method = "get"
     uri = "/user?id=1"
     response = ResourceInvoke(hostname, port, method, uri)
-    if not response:
-        print("Request failed.")
-        return
 
     print("Response Code:", response.code)
     print("Response Headers:", response.headers)
     print("Raw Response JsonValue:", response.jsonValue)
     print("Response View:", response.view)
+```
+
+### Ruby
+
+```Ruby
+method = "get"
+uri = "/user?id=1"
+
+resource_invoke = ResourceInvoke.new(hostname, port)
+response = resource_invoke.call(method, uri)
+
+puts "Response Code: #{response.code}"
+puts "Response Headers: #{response.headers}"
+puts "Raw Response JsonValue: #{response.jsonValue}"
+puts "Response View: #{response.view}"
 ```
 
 Note: The URI can be a schema as well as a path. Instead of `/user?id=1`, you can specify `page://self/user?id=1` to access both app and page resources.
