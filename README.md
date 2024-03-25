@@ -52,16 +52,17 @@ Application context is prod-hal-api-app
 
 Import Thrift App in the module.
 ```php
-    protected function configure(): void
-    {
-        // Binding thirft app to a host called "sekai"
-        $this->override(new ImportThriftAppModule([
-            new ThriftApp('sekai', '127.0.0.1', '9090')
-        ]));
-    }
+protected function configure(): void
+{
+    // Binding thirft app to a host called "sekai"
+    $this->override(new ImportThriftAppModule([
+        new ThriftApp('sekai', '127.0.0.1', '9090')
+    ]));
+}
 ```
 
 Thrift apps available just like the 'self' app. See [more](/client/bear_client/main.php).
+
 ```php
 echo $resource->get('page://self/?name=Sekai');  // "greeting": "Konichiwa Sekai" from local app
 echo $resource->get('page://sekai/?name=World'); // "greeting": "Hello World" from remote(127.0.0.1:9090) app
@@ -72,41 +73,45 @@ echo $resource->get('page://sekai/?name=World'); // "greeting": "Hello World" fr
 ### PHP
 
 ```php
-    $invoker = new ResourceInvoker($host, $port);
-    $method = 'get';
-    $uri = '/user?id=1';
-    $response = $invoker->resourceInvoke($method, $uri);
-    assert($response instanceof ResourceResponse);
-    printf("Response Code: %s\n", $response->code);
-    printf("Response Headers: %s\n", json_encode($response->headers));
-    printf("Raw Response JsonValue: : %s\n", $response->jsonValue);
-    printf("Response View: %s\n", $response->view);
+$method = 'get';
+$uri = '/user?id=1';
+
+$invoker = new ResourceInvoker($host, $port);
+$response = $invoker->resourceInvoke($method, $uri);
+
+assert($response instanceof ResourceResponse);
+printf("Response Code: %s\n", $response->code);
+printf("Response Headers: %s\n", json_encode($response->headers));
+printf("Raw Response JsonValue: : %s\n", $response->jsonValue);
+printf("Response View: %s\n", $response->view);
 ```
 
 ### Go
 
 ```go
-    method := "get"
-    uri := "/user?id=1
-    response, err := ResourceInvoke(hostname, port, method, uri)
+method := "get"
+uri := "/user?id=1
 
-    fmt.Println("Response Code:", response.Code)
-    fmt.Println("Response Headers:", response.Headers)
-    fmt.Println("Raw Response JsonValue: ", response.JsonValue)
-    fmt.Println("Response View:", response.View)
+response, err := ResourceInvoke(hostname, port, method, uri)
+
+fmt.Println("Response Code:", response.Code)
+fmt.Println("Response Headers:", response.Headers)
+fmt.Println("Raw Response JsonValue: ", response.JsonValue)
+fmt.Println("Response View:", response.View)
 ```
 
 ### Python
 
 ```python
-    method = "get"
-    uri = "/user?id=1"
-    response = ResourceInvoke(hostname, port, method, uri)
+method = "get"
+uri = "/user?id=1"
 
-    print("Response Code:", response.code)
-    print("Response Headers:", response.headers)
-    print("Raw Response JsonValue:", response.jsonValue)
-    print("Response View:", response.view)
+response = ResourceInvoke(hostname, port, method, uri)
+
+print("Response Code:", response.code)
+print("Response Headers:", response.headers)
+print("Raw Response JsonValue:", response.jsonValue)
+print("Response View:", response.view)
 ```
 
 ### Ruby
