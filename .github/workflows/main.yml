@@ -58,17 +58,22 @@ jobs:
           sleep 3 # Give server some time to start
 
       - name: Run Go client
-        run: composer run:go
+        run: |
+          composer run:go | tee /dev/stderr | grep -qF '"greeting":"Hello World!"'
 
       - name: Run Python client
-        run: composer run:py
+        run: |
+          composer run:py | tee /dev/stderr | grep -qF '"greeting":"Hello World!"'
 
       - name: Run PHP client
-        run: composer run:php
+        run: |
+          composer run:php | tee /dev/stderr | grep -qF '"greeting":"Hello Workd!"'
 
       - name: Run BEAR.Sunday client
-        run: composer run:bear
+        run: |
+          composer run:bear | tee /dev/stderr | grep -qF '"greeting": "Hello World"'
 
       - name: Run Ruby client
-        run: composer run:rb
+        run: |
+          composer run:rb | tee /dev/stderr | grep -qF '"greeting":"Hello World!"'
         continue-on-error: true
