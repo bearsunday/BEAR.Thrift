@@ -12,6 +12,7 @@ use Thrift\Exception\TException;
 use Thrift\Factory\TBinaryProtocolFactory;
 use Thrift\Transport\TMemoryBuffer;
 use Thrift\Type\TMessageType;
+use Throwable;
 
 final class SwooleServer implements ServerInterface
 {
@@ -24,14 +25,16 @@ final class SwooleServer implements ServerInterface
         $processor = new ResourceServiceProcessor($handler);
         $server->on(
             'receive',
-            static function (Server $server, int $fd, int $reactorId, string $data) use ($factory, $processor): void {
+            function (Server $server, int $fd, int $reactorId, string $data) use ($factory, $processor): void {
                 $transport = new TMemoryBuffer($data);
                 $protocol = $factory->getProtocol($transport);
                 try {
                     $processor->process($protocol, $protocol);
-                } catch (TException $e) {
+                } catch (Throwable $e) {
                     // Uncaught, it would end the worker: the whole server in the default SWOOLE_BASE mode
-                    $server->send($fd, self::errorReply($factory, $data, $e));
+                    $server->send($fd, $this->errorReply($factory, $data, $e));
+                    // The rest of an unreadable request would arrive as more receive events, each answered again
+                    $server->close($fd);
 
                     return;
                 }
@@ -42,7 +45,7 @@ final class SwooleServer implements ServerInterface
         $server->start();
     }
 
-    private static function errorReply(TBinaryProtocolFactory $factory, string $data, TException $e): string
+    private function errorReply(TBinaryProtocolFactory $factory, string $data, Throwable $e): string
     {
         $name = '';
         $type = 0;
@@ -57,7 +60,10 @@ final class SwooleServer implements ServerInterface
         $transport = new TMemoryBuffer();
         $protocol = $factory->getProtocol($transport);
         $protocol->writeMessageBegin($name, TMessageType::EXCEPTION, $seqid);
-        (new TApplicationException($e->getMessage(), TApplicationException::PROTOCOL_ERROR))->write($protocol);
+        $error = $e instanceof TException
+            ? new TApplicationException($e->getMessage(), TApplicationException::PROTOCOL_ERROR)
+            : new TApplicationException('Internal server error', TApplicationException::INTERNAL_ERROR);
+        $error->write($protocol);
         $protocol->writeMessageEnd();
 
         return $transport->getBuffer();

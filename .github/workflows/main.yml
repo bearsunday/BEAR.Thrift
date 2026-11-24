@@ -25,7 +25,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: '^1.26' # The Go version to download (if necessary) and use
+          go-version: '1.26.x' # The Go version to download (if necessary) and use
 
       - name: Set up Python
         uses: actions/setup-python@v2
