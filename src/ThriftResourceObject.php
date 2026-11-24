@@ -12,7 +12,7 @@ use BEARSunday\Thrift\Exception\ThriftRemoteExecutionException;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 use function json_decode;
-use function strtoupper;
+use function strtolower;
 
 /**
  * @method        ThriftResourceObject get(AbstractUri|string $uri, array $params = [])
@@ -47,14 +47,14 @@ final class ThriftResourceObject extends ResourceObject
         unset($invoker);
 
         $uri = $request->resourceObject->uri;
-        $method = strtoupper($uri->method);
+        $method = strtolower($uri->method);
         $response = ($this->invoke)($method, (string) $uri);
         if ($response->code >= 400) {
             throw new ThriftRemoteExecutionException($response->jsonValue, $response->code);
         }
 
         $this->code = $response->code;
-        $this->code = $response->headers;
+        $this->headers = $response->headers;
         $this->body = json_decode($response->jsonValue);
         $this->view = $response->view;
 
