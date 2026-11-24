@@ -14,6 +14,8 @@ use Thrift\Transport\TMemoryBuffer;
 use Thrift\Type\TMessageType;
 use Throwable;
 
+use function error_log;
+
 final class SwooleServer implements ServerInterface
 {
     /** @inheritdoc */
@@ -32,6 +34,11 @@ final class SwooleServer implements ServerInterface
                     $processor->process($protocol, $protocol);
                 } catch (Throwable $e) {
                     // Uncaught, it would end the worker: the whole server in the default SWOOLE_BASE mode
+                    if (! $e instanceof TException) {
+                        // The reply carries no details, so keep them in the server log
+                        error_log((string) $e);
+                    }
+
                     $server->send($fd, $this->errorReply($factory, $data, $e));
                     // The rest of an unreadable request would arrive as more receive events, each answered again
                     $server->close($fd);
