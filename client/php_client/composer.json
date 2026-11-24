@@ -2,7 +2,7 @@
     "name": "myvendor/php_client",
     "description": "BEAR.Sunday thrift client",
     "require": {
-        "apache/thrift": "^0.24.0"
+        "apache/thrift": "^0.25.0"
     },
     "license": "MIT",
     "autoload": {
