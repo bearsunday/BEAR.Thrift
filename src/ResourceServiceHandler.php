@@ -38,7 +38,7 @@ final class ResourceServiceHandler implements ResourceServiceIf
         $response = new ResourceResponse();
         try {
             if ($request === null) {
-                throw new UnexpectedValueException('Missing resource request');
+                throw new UnexpectedValueException('Missing resource request', 400);
             }
 
             $uri = $this->changeHostSelf($request->uri);
