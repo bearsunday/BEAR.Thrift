@@ -20,8 +20,8 @@
         }
     ],
     "require": {
-        "php": "^8.1",
-        "apache/thrift": "^0.19.0",
+        "php": "^8.2",
+        "apache/thrift": "^0.25.0",
         "bear/package": "^1.10",
         "bear/resource": "^1.21"
     },

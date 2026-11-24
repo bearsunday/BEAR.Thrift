@@ -9,6 +9,7 @@ use ResourceService\ResourceRequest;
 use ResourceService\ResourceResponse;
 use ResourceService\ResourceServiceIf;
 use Throwable;
+use UnexpectedValueException;
 
 use function json_encode;
 use function parse_url;
@@ -28,14 +29,18 @@ final class ResourceServiceHandler implements ResourceServiceIf
     /**
      * Invokes a resource request and returns the response.
      *
-     * @param ResourceRequest $request The resource request object.
+     * @param ResourceRequest|null $request The resource request object; null when the client sent no request struct.
      *
      * @return ResourceResponse The response generated from the resource request.
      */
-    public function invokeRequest(ResourceRequest $request): ResourceResponse
+    public function invokeRequest(ResourceRequest|null $request): ResourceResponse
     {
         $response = new ResourceResponse();
         try {
+            if ($request === null) {
+                throw new UnexpectedValueException('Missing resource request', 400);
+            }
+
             $uri = $this->changeHostSelf($request->uri);
             $bearResponse = $this->resource->{$request->method}->uri($uri)();
             $response->code = $bearResponse->code;

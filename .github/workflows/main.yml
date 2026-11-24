@@ -5,6 +5,10 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.2', '8.3', '8.4', '8.5']
 
     steps:
       - name: Checkout repository
@@ -13,13 +17,15 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: ${{ matrix.php-version }}
           extensions: swoole # Swoole extension
+        env:
+          fail-fast: true # bin/serve.php needs Swoole; stop here if it cannot be installed
 
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: '^1.17' # The Go version to download (if necessary) and use
+          go-version: '^1.26' # The Go version to download (if necessary) and use
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -52,17 +58,22 @@ jobs:
           sleep 3 # Give server some time to start
 
       - name: Run Go client
-        run: composer run:go
+        run: |
+          composer run:go | tee /dev/stderr | grep -qF '"greeting":"Hello World!"'
 
       - name: Run Python client
-        run: composer run:py
+        run: |
+          composer run:py | tee /dev/stderr | grep -qF '"greeting":"Hello World!"'
 
       - name: Run PHP client
-        run: composer run:php
+        run: |
+          composer run:php | tee /dev/stderr | grep -qF '"greeting":"Hello Workd!"'
 
       - name: Run BEAR.Sunday client
-        run: composer run:bear
+        run: |
+          composer run:bear | tee /dev/stderr | grep -qF '"greeting": "Hello World"'
 
       - name: Run Ruby client
-        run: composer run:rb
+        run: |
+          composer run:rb | tee /dev/stderr | grep -qF '"greeting":"Hello World!"'
         continue-on-error: true
