@@ -1,5 +1,5 @@
 module go_client
 
-go 1.22.1
+go 1.25
 
-require github.com/apache/thrift v0.20.0
+require github.com/apache/thrift v0.24.0
