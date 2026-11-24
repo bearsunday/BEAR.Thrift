@@ -19,6 +19,8 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: swoole # Swoole extension
+        env:
+          fail-fast: true # bin/serve.php needs Swoole; stop here if it cannot be installed
 
       - name: Set up Go
         uses: actions/setup-go@v2
