@@ -11,7 +11,6 @@ use BEAR\Resource\ResourceObject;
 use BEARSunday\Thrift\Exception\ThriftRemoteExecutionException;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-use function http_build_query;
 use function json_decode;
 use function strtoupper;
 
